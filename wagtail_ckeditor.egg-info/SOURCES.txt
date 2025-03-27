@@ -1,0 +1,12 @@
+setup.py
+wagtail_ckeditor/__init__.py
+wagtail_ckeditor/settings.py
+wagtail_ckeditor/urls.py
+wagtail_ckeditor/views.py
+wagtail_ckeditor/wagtail_hooks.py
+wagtail_ckeditor/widgets.py
+wagtail_ckeditor.egg-info/PKG-INFO
+wagtail_ckeditor.egg-info/SOURCES.txt
+wagtail_ckeditor.egg-info/dependency_links.txt
+wagtail_ckeditor.egg-info/requires.txt
+wagtail_ckeditor.egg-info/top_level.txt
