@@ -3,11 +3,18 @@ from django.utils.html import format_html
 from wagtail import hooks
 from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
 from wagtail.whitelist import allow_without_attributes, attribute_rule
-from wagtail_ckeditor import settings
+from wagtail_ckeditor import settings as ckeditor_settings
 
 @hooks.register('insert_editor_js')
 def ckeditorjs():
-    return format_html('<script src="{src}"></script>', src=static("wagtail_ckeditor/ckeditor/ckeditor.js"))
+    return format_html(
+        '<link rel="stylesheet" href="{css_src}">'
+        '<link rel="stylesheet" href="{custom_css}">'
+        '<script type="module" src="{js_src}"></script>',
+        css_src = static(ckeditor_settings.CKEDITOR_CSS),
+        custom_css = static('wagtail_ckeditor/custom.css'),
+        js_src = static(ckeditor_settings.CKEDITOR_JS),
+    )
 
 @hooks.register('register_rich_text_features')
 def ckeditor_feature(features):
