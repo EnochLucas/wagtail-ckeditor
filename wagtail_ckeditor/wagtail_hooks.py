@@ -1,47 +1,85 @@
+import json
 from django.templatetags.static import static
-from django.utils.html import format_html
+from django.utils.html import format_html, mark_safe
 from wagtail import hooks
 from wagtail.admin.rich_text.converters.editor_html import WhitelistRule
 from wagtail.whitelist import allow_without_attributes, attribute_rule
-from wagtail_ckeditor import settings as ckeditor_settings
+from wagtail_ckeditor import settings as ck_settings
 
-@hooks.register('insert_editor_js')
+
+@hooks.register("insert_editor_js")
 def ckeditorjs():
+    config_json = mark_safe(json.dumps(ck_settings.CKEDITOR_CONFIG))
+    plugins_json = mark_safe(json.dumps(ck_settings.CKEDITOR_PLUGIN_REFERENCES))
+
     return format_html(
+        # 1) CKEditor CSS
         '<link rel="stylesheet" href="{css_src}">'
+        # 2) Any custom admin overrides
         '<link rel="stylesheet" href="{custom_css}">'
-        '<script type="module" src="{js_src}"></script>',
-        css_src = static(ckeditor_settings.CKEDITOR_CSS),
-        custom_css = static('wagtail_ckeditor/custom.css'),
-        js_src = static(ckeditor_settings.CKEDITOR_JS),
+        # 3) Inline injection of config & plugin names
+        "<script>"
+        "window.ckeditorConfig = {config};"
+        "window.ckeditorPluginNames = {plugins};"
+        "</script>"
+        # 4) CKEditor build loader
+        '<script type="module" src="{js_src}"></script>'
+        '<script type="module" src="{custom_js}"></script>',
+        css_src=static(ck_settings.CKEDITOR_CSS),
+        custom_css=static("custom.css"),
+        config=config_json,
+        plugins=plugins_json,
+        js_src=static(ck_settings.CKEDITOR_JS),
+        custom_js=static("wagtail-ckeditor.js"),
     )
 
-@hooks.register('register_rich_text_features')
+
+@hooks.register("register_rich_text_features")
 def ckeditor_feature(features):
     """
     Register a rich text feature for CKEditor that whitelists the
     desired elements and attributes.
     """
     # Register a feature named 'ckeditor'
-    features.register_converter_rule('editorhtml', 'ckeditor', [
-        WhitelistRule('s', allow_without_attributes),
-        WhitelistRule('u', allow_without_attributes),
-        WhitelistRule('span', attribute_rule({'style': True, 'class': True})),
-        WhitelistRule('p', attribute_rule({'style': True, 'class': True})),
-        WhitelistRule('div', attribute_rule({'style': True, 'class': True})),
-        WhitelistRule('q', allow_without_attributes),
-        WhitelistRule('ins', allow_without_attributes),
-        WhitelistRule('pre', allow_without_attributes),
-        WhitelistRule('address', allow_without_attributes),
-        WhitelistRule('table', attribute_rule({'align': True, 'border': True, 'cellpadding': True, 'style': True})),
-        WhitelistRule('caption', allow_without_attributes),
-        WhitelistRule('thead', allow_without_attributes),
-        WhitelistRule('tr', allow_without_attributes),
-        WhitelistRule('tbody', allow_without_attributes),
-        WhitelistRule('td', attribute_rule({'style': True, 'class': True})),
-        WhitelistRule('hr', allow_without_attributes),
-        WhitelistRule('img', attribute_rule({'alt': True, 'src': True, 'style': True, 'width': True, 'height': True})),
-    ])
+    features.register_converter_rule(
+        "editorhtml",
+        "ckeditor",
+        [
+            WhitelistRule("s", allow_without_attributes),
+            WhitelistRule("u", allow_without_attributes),
+            WhitelistRule("span", attribute_rule({"style": True, "class": True})),
+            WhitelistRule("p", attribute_rule({"style": True, "class": True})),
+            WhitelistRule("div", attribute_rule({"style": True, "class": True})),
+            WhitelistRule("q", allow_without_attributes),
+            WhitelistRule("ins", allow_without_attributes),
+            WhitelistRule("pre", allow_without_attributes),
+            WhitelistRule("address", allow_without_attributes),
+            WhitelistRule(
+                "table",
+                attribute_rule(
+                    {"align": True, "border": True, "cellpadding": True, "style": True}
+                ),
+            ),
+            WhitelistRule("caption", allow_without_attributes),
+            WhitelistRule("thead", allow_without_attributes),
+            WhitelistRule("tr", allow_without_attributes),
+            WhitelistRule("tbody", allow_without_attributes),
+            WhitelistRule("td", attribute_rule({"style": True, "class": True})),
+            WhitelistRule("hr", allow_without_attributes),
+            WhitelistRule(
+                "img",
+                attribute_rule(
+                    {
+                        "alt": True,
+                        "src": True,
+                        "style": True,
+                        "width": True,
+                        "height": True,
+                    }
+                ),
+            ),
+        ],
+    )
 
     # Add the feature to the default set
-    features.default_features.append('ckeditor')
+    features.default_features.append("ckeditor")

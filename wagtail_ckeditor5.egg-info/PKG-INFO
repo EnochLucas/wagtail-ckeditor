@@ -1,8 +1,26 @@
+Metadata-Version: 2.1
+Name: wagtail-ckeditor5
+Version: 0.1.0
+Summary: CKEditor 5 integration for Wagtail CMS
+Home-page: https://github.com/BrightBridgeWeb/wagtail-ckeditor5
+Author: Bright Bridge Web
+Author-email: services@brightbridgeweb.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Framework :: Wagtail
+Classifier: Framework :: Wagtail :: 4
+Classifier: Framework :: Django
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+
 # wagtail-ckeditor5
 
-**CKEditor 5 integration for Wagtail CMS**
+**CKEditorÂ 5 integration for Wagtail CMS**
 
-> A flexible, settings-driven package that replaces Wagtail’s default rich text editor with CKEditor 5. Supports Wagtail ≥ 4.2.4 and Django ≥ 3.2.
+> A flexible, settings-driven package that replaces Wagtailâ€™s default rich text editor with CKEditorÂ 5. Supports Wagtail â‰¥Â 4.2.4 and Django â‰¥Â 3.2.
 
 ---
 
@@ -28,27 +46,27 @@
 
 ## Introduction
 
-`wagtail-ckeditor5` is a Wagtail extension that lets you swap the built‑in Draftail editor for **CKEditor 5**. It’s fully configurable via Django settings, letting you:
+`wagtail-ckeditor5` is a Wagtail extension that lets you swap the builtâ€‘in Draftail editor for **CKEditorÂ 5**. Itâ€™s fully configurable via Django settings, letting you:
 
-- Select a custom CKEditor build (classic, inline, super‑build, or your own).  
+- Select a custom CKEditor build (classic, inline, superâ€‘build, or your own).  
 - Define which plugins load, how the toolbar looks, and font options.  
 - Override global editor behavior without custom widget classes.  
 
-This package is a fork of an earlier integration, modernized for Wagtail 4.2.4+ and reworked around `WAGTAILADMIN_RICH_TEXT_EDITORS`.
+This package is a fork of an earlier integration, modernized for WagtailÂ 4.2.4+ and reworked around `WAGTAILADMIN_RICH_TEXT_EDITORS`.
 
 ## Features
 
 - **Settings-driven**: control JS/CSS paths, plugin lists, toolbar layout, font sizes/families via `settings.py`.  
-- **CKEditor 5 builds**: use any build—super‑build with every plugin or a slim custom build.  
+- **CKEditor 5 builds**: use any buildâ€”superâ€‘build with every plugin or a slim custom build.  
 - **Global editor replacement**: configure CKEditor as the default rich text editor for all rich text fields.  
 - **Advanced styling**: transparent backgrounds, extended font options.  
 
 ## Requirements
 
 - Python 3.8+  
-- Django ≥ 3.2  
-- Wagtail ≥ 4.2.4  
-- CKEditor 5 assets (JS/CSS) published in your static files
+- Django â‰¥Â 3.2  
+- Wagtail â‰¥Â 4.2.4  
+- CKEditorÂ 5 assets (JS/CSS) published in your static files
 
 ## Installation
 
@@ -79,7 +97,7 @@ python manage.py collectstatic
 
 ## Configuration
 
-All defaults live in `wagtail_ckeditor/settings.py`. Override in your project’s `settings.py` using the `WAGTAIL_CKEDITOR_*` namespace.
+All defaults live in `wagtail_ckeditor/settings.py`. Override in your projectâ€™s `settings.py` using the `WAGTAIL_CKEDITOR_*` namespace.
 
 ### Static Asset Paths
 
@@ -90,7 +108,7 @@ WAGTAIL_CKEDITOR_CSS = 'ckeditor5/ckeditor5/ckeditor5.css'
 
 ### Editor Selection
 
-Tell Wagtail to use CKEditor 5 as the default rich text editor:
+Tell Wagtail to use CKEditorÂ 5 as the default rich text editor:
 
 ```python
 WAGTAILADMIN_RICH_TEXT_EDITORS = {
@@ -100,7 +118,7 @@ WAGTAILADMIN_RICH_TEXT_EDITORS = {
 }
 ```
 
-No need to manually attach a widget to individual panels—this setting applies CKEditor everywhere Wagtail uses its default editor.
+No need to manually attach a widget to individual panelsâ€”this setting applies CKEditor everywhere Wagtail uses its default editor.
 
 ### Plugin Imports & References
 
@@ -121,7 +139,7 @@ These lists must match the exports in your chosen CKEditor build.
 
 ### Editor Configuration
 
-Fine‑tune CKEditor settings—toolbar layout, fonts, etc.—via one dict:
+Fineâ€‘tune CKEditor settingsâ€”toolbar layout, fonts, etc.â€”via one dict:
 
 ```python
 WAGTAIL_CKEDITOR_CONFIG = {
@@ -151,7 +169,7 @@ WAGTAIL_CKEDITOR_CONFIG = {
 
 ### Transparent Background
 
-Override CKEditor’s editable area background in your admin CSS:
+Override CKEditorâ€™s editable area background in your admin CSS:
 
 ```css
 /* admin.css */
@@ -163,9 +181,9 @@ Override CKEditor’s editable area background in your admin CSS:
 ### Font Sizes & Custom Values
 
 - The `options` array defines dropdown choices.  
-- `supportAllValues: True` **allows** pasting arbitrary sizes (e.g. `23px`, `1.5em`), but there’s no built‑in text input in the dropdown UI.
+- `supportAllValues: True` **allows** pasting arbitrary sizes (e.g. `23px`, `1.5em`), but thereâ€™s no builtâ€‘in text input in the dropdown UI.
 
-Users can copy‑paste custom sizes into the font size dropdown.
+Users can copyâ€‘paste custom sizes into the font size dropdown.
 
 ## Compatibility & Testing
 
@@ -189,5 +207,7 @@ Contributions welcome! Please:
 ## Acknowledgements
 
 A warm thank you to Martin Mastny (martin.mastny@vscht.cz), author of [wagtail-ckeditor](https://github.com/mastnym/wagtail-ckeditor) which served as the inspiration for this project.
+
+
 
 

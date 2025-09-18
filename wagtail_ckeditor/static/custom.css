@@ -1,0 +1,11 @@
+.ck-editor__editable {
+    background-color: transparent !important;
+}
+
+ol > li {
+    display: list-item;
+}
+
+form li, form ul {
+    list-style-type: inherit;
+}
